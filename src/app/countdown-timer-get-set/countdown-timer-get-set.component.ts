@@ -10,7 +10,19 @@ export class CountdownTimerGetSetComponent implements OnInit {
   message = '';
   remainingTime: number;
 
-  @Input() seconds = 11;
+  private _seconds = 11;
+
+  @Input()
+  get seconds(): number {
+    return this._seconds;
+  }
+
+  set seconds(v) {
+    //Number(value) đổi về dạng number, k chuyển đc trả về NaN
+    const vFixed = Number(v);
+    //Number.isNaN(abc) kiểm tra xyz có phải NaN ko. trả về T hoặc F, nếu T _second = 11, nếu ko _second = đối tượng truyền vào
+    this._seconds = Number.isNaN(vFixed) ? 11 : vFixed;
+  }
 
   clearTime() {
     clearInterval(this.intervalID);
